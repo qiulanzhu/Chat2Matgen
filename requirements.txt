@@ -1,0 +1,3 @@
+openai
+loguru
+matgen_rester
