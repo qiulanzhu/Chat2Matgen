@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat2Matgen: Material Science LLM Service Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        #chat-window {
+            scrollbar-width: thin;
+            scrollbar-color: #e2e8f0 #f8fafc;
+            background-color: #f8fafc;
+        }
+
+        #chat-window::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #chat-window::-webkit-scrollbar-thumb {
+            background-color: #e2e8f0;
+            border-radius: 10px;
+        }
+
+        .user-message {
+            background: linear-gradient(135deg, #4c51bf 0%, #8e54e9 100%);
+            color: white;
+            border-radius: 16px;
+            padding: 12px;
+            max-width: 70%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .assistant-message {
+            /*background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%);*/
+            /*background: linear-gradient(135deg, #C8E6C9 0%, #B7E8C6 100%);*/
+
+            background: linear-gradient(135deg, #20394a 0%, #082b37 100%);
+            color: white;
+            border-radius: 16px;
+            padding: 12px;
+            max-width: 70%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .markdown-content {
+            line-height: 1.6;
+            color: #ffffff;
+        }
+
+        .markdown-content h1 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 0.25rem;
+        }
+
+        .markdown-content h2 {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #ffffff;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .markdown-content h3 {
+            font-size: 1.1rem;
+            font-weight: semibold;
+            color: #ffffff;
+            margin-top: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .markdown-content p {
+            margin-bottom: 1rem;
+        }
+
+        .markdown-content code {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .markdown-content pre {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            overflow-x: auto;
+        }
+
+        .markdown-content pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+
+        .markdown-content ul,
+        .markdown-content ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .markdown-content ul {
+            list-style-type: disc;
+        }
+
+        .markdown-content ol {
+            list-style-type: decimal;
+        }
+
+        .markdown-content a {
+            color: #ffffff;
+            text-decoration: underline;
+            opacity: 0.8;
+        }
+
+        .markdown-content blockquote {
+            border-left: 4px solid rgba(255, 255, 255, 0.5);
+            padding-left: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-purple-200 to-indigo-200 h-screen flex flex-col items-center justify-center">
+
+    <!-- Platform Title -->
+    <div class="w-full text-center py-6 bg-gradient-to-r from-purple-700 to-indigo-800 shadow-lg absolute top-0 left-0">
+        <h1 class="text-3xl md:text-4xl font-extrabold text-white tracking-wide">
+            Chat2Matgen：基于 RAG 框架的材料科学 LLM 服务平台
+        </h1>
+    </div>
+
+    <!-- Main Container -->
+    <div class="bg-white shadow-lg rounded-lg w-4/5 h-4/5 flex overflow-hidden mt-32">
+
+        <!-- FAQ Area -->
+        <div class="w-1/3 bg-gray-100 p-6 border-r">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-800">你可以问我以下问题:</h2>
+            <ul id="faq-list" class="space-y-4 text-gray-700">
+                <li class="faq-item hover:text-purple-500 cursor-pointer" data-question="What is the chemical formula of hydrated lime?">
+                    <span class="underline">What is the chemical formula of hydrated lime?</span>
+                </li>
+                <li class="faq-item hover:text-purple-500 cursor-pointer" data-question="What is the Fermi energy of NaCl?">
+                    <span class="underline">What is the Fermi energy of NaCl?</span>
+                </li>
+                <li class="faq-item hover:text-purple-500 cursor-pointer" data-question="What are the chemical properties of nitrites?">
+                    <span class="underline">What are the chemical properties of nitrites?</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Chat Window -->
+        <div class="w-2/3 flex flex-col p-4 bg-gray-50">
+            <!-- Chat History -->
+            <div id="chat-window" class="flex-1 overflow-auto p-4 rounded-lg border border-gray-300">
+                <div class="text-center text-gray-400 mb-2">How can I assist you today?</div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="mt-4 flex items-center">
+                <input id="user-input" type="text" placeholder="Type your message here..."
+                       class="flex-1 p-3 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-purple-400 outline-none">
+                <button id="send-button" class="bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-6 py-3 rounded-r-lg hover:from-purple-600 hover:to-indigo-700 transition-all duration-300">
+                    Send
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const sendButton = document.getElementById('send-button');
+        const userInput = document.getElementById('user-input');
+        const chatWindow = document.getElementById('chat-window');
+        const faqItems = document.querySelectorAll('.faq-item');
+
+        // Configure marked for code highlighting and safe links
+        marked.setOptions({
+            breaks: true,
+            sanitize: true,
+        });
+
+        // Append message to chat window
+        function appendMessage(sender, message, isMarkdown = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('mb-3', 'flex', sender === 'User' ? 'justify-end' : 'justify-start');
+
+            const content = isMarkdown
+                ? `<div class="assistant-message markdown-content">${marked.parse(message)}</div>`
+                : `<div class="${sender === 'User' ? 'user-message' : 'assistant-message'}">
+                    <span>${message}</span>
+                </div>`;
+
+            messageDiv.innerHTML = content;
+            chatWindow.appendChild(messageDiv);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+
+        // Async API response with streaming
+        async function apiResponse(userMessage) {
+            try {
+                // Create a new assistant message container for streaming
+                const assistantMessageDiv = document.createElement('div');
+                assistantMessageDiv.classList.add('mb-3', 'flex', 'justify-start');
+                assistantMessageDiv.innerHTML = `
+                    <div class="assistant-message markdown-content">
+                        <span></span>
+                    </div>
+                `;
+                chatWindow.appendChild(assistantMessageDiv);
+                const streamingMessageSpan = assistantMessageDiv.querySelector('span');
+
+                // Send request to backend
+                const response = await fetch('http://127.0.0.1:8200/get_answer', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ query: userMessage })
+                });
+
+                // Handle streaming data from server
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                let fullMessage = '';
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+
+                    const chunk = decoder.decode(value);
+                    const lines = chunk.split('\n\n');
+
+                    lines.forEach(line => {
+                        if (line.startsWith('data: ')) {
+                            try {
+                                const jsonData = JSON.parse(line.slice(6));
+                                if (jsonData.status === 1 && jsonData.data) {
+                                    fullMessage += jsonData.data;
+                                    streamingMessageSpan.innerHTML = marked.parse(fullMessage);
+                                    // Scroll to bottom
+                                    chatWindow.scrollTop = chatWindow.scrollHeight;
+                                }
+                            } catch (error) {
+                                console.error('Parse error:', error);
+                            }
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                const errorMessageDiv = document.createElement('div');
+                errorMessageDiv.classList.add('mb-3', 'flex', 'justify-start');
+                errorMessageDiv.innerHTML = `
+                    <div class="assistant-message bg-red-500 text-white">
+                        <span>Network error, please try again later</span>
+                    </div>
+                `;
+                chatWindow.appendChild(errorMessageDiv);
+                chatWindow.scrollTop = chatWindow.scrollHeight;
+            }
+        }
+
+        // Send message
+        function sendMessage() {
+            const message = userInput.value.trim();
+            if (!message) return;
+
+            appendMessage('User', message); // User message
+            userInput.value = ''; // Clear input
+            apiResponse(message); // Call async API
+        }
+
+        sendButton.addEventListener('click', sendMessage);
+
+        // Send message on Enter key press
+        userInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        // Click FAQ question to send
+        faqItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const question = item.getAttribute('data-question');
+                appendMessage('User', question);
+                apiResponse(question);
+            });
+        });
+    </script>
+</body>
+</html>

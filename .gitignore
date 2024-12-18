@@ -1,5 +1,8 @@
 QAnything-master
 __pycache__
 ../.idea
+.idea
+.git
 venv
 *.yaml
+.matgenrc.yaml
