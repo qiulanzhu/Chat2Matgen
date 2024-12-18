@@ -1,0 +1,16 @@
+{
+  "apps": [
+    {
+      "name": "Chat2Matgen",
+      "script": "app.py",
+      "interpreter": "python",
+      "instances": 1,
+      "autorestart": false,
+      "watch": false,
+      "max_memory_restart": "500M",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss",
+      "env": {
+      }
+    }
+  ]
+}

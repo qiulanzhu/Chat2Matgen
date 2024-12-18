@@ -10,7 +10,7 @@ def getRelationPaper(query):
     }
     data = {
         "user_id": "zzp",
-        "kb_ids": ["KB091d4a46fe6a4a5984838b1499b9e964"],
+        "kb_ids": ["KBf42f9bab99fa4ebd93a59be1e42f1969"],
         "question": f"{query}",
     }
     try:
@@ -29,6 +29,6 @@ def getRelationPaper(query):
 
 
 if __name__ == '__main__':
-    ret = getRelationPaper("what is SWNTs")
+    ret = getRelationPaper("what is One-Pot?")
     print(ret)
     print(f"len={len(ret)}")
