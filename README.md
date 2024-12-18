@@ -22,3 +22,7 @@ python app.py
 
 ## 页面效果
 ![image](public/home.png)
+
+
+## 系统架构图
+![image](public/架构图1216.png)
