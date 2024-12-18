@@ -2,3 +2,4 @@ openai==1.40.6
 loguru
 matgen_rester
 flask
+flask-cors

@@ -1,9 +1,12 @@
 from flask import Flask, Response, request, send_from_directory
+from flask_cors import CORS  # 引入 CORS
 import json
-from api.openai_api import llm_chat_stream  # Assuming this is your streaming function
 from main import run
 
 app = Flask(__name__, static_folder='public')
+
+# 启用跨域支持
+CORS(app, resources={r"/*": {"origins": "*"}})  # 允许所有源进行跨域请求
 
 # 首页接口
 @app.route("/")
