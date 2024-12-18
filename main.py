@@ -34,9 +34,7 @@ def run(query):
     prompt = prompt.replace('{key_information}', key_information)
     logger.info(f"prompt:{prompt}")
 
-    answer = openai_api.llm_chat(prompt, json_format=False)
-    logger.info(f"answer:{answer}")
-    return answer
+    return openai_api.llm_chat_stream(prompt)
 
 if __name__ == '__main__':
     input_query = "Can you tell me the crystal system of the crystal material with formula 'Si1 Os1' and space group 'Pm-3m'?"

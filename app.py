@@ -1,6 +1,7 @@
 from flask import Flask, Response, request, send_from_directory
 import json
 from api.openai_api import llm_chat_stream  # Assuming this is your streaming function
+from main import run
 
 app = Flask(__name__)
 
@@ -14,7 +15,7 @@ def get_answer():
     query = request.json.get('query', 'hi')
 
     def generate():
-        for content_piece in llm_chat_stream(prompt=query):
+        for content_piece in run(query):
             yield 'data: ' + json.dumps({
                 'data': content_piece,
                 "status": 1, "message": 'Succeed'}, ensure_ascii=False) + '\n\n'
