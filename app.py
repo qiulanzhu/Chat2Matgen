@@ -3,7 +3,7 @@ import json
 from api.openai_api import llm_chat_stream  # Assuming this is your streaming function
 from main import run
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='public')
 
 # 首页接口
 @app.route("/")

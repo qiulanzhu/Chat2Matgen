@@ -74,7 +74,15 @@ def extract_element(query):
                     formula += element + str(data['formula']['stoichiometry'][i][element]) + ' '
                 formula_list.append(formula.strip())
 
-        return data['is_professional_question'], data['question_classify'], data['formula']['elements'], formula_list, data['space_group']
+        space_group_list = [None]
+        if data['space_group']:
+            space_group_list = data['space_group']
+
+        elements_list = [None]
+        if data['formula']['elements']:
+            elements_list = data['formula']['elements']
+
+        return data['is_professional_question'], data['question_classify'], elements_list, formula_list, space_group_list
     except Exception as e:
         logger.error(e)
         return None, None, None, None, None

@@ -16,6 +16,7 @@ def run(query):
             key_information += f"This Important attribute of {id}: {matgen_api.search_with_mat_id(id)}\n"
 
     is_professional_question, question_classify, element_list, formula_list, space_group_list = query_analyse.extract_element(query)
+    logger.info(f"is_professional_question:{is_professional_question}, question_classify:{question_classify}, element_list:{element_list}, formula_list:{formula_list}, space_group_list:{space_group_list}")
 
     if is_professional_question and question_classify == 1:
         api_result = ''
@@ -27,7 +28,7 @@ def run(query):
 
         key_information += api_result
     else:
-        key_information += qanything_api.getRelationPaper(query)
+        key_information += str(qanything_api.getRelationPaper(query))
 
 
     prompt = PROMPT_TEMPLATE.replace('{{question}}', query)

@@ -1,3 +1,4 @@
 openai
 loguru
 matgen_rester
+flask
