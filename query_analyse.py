@@ -1,7 +1,6 @@
 import re
 from loguru import logger
 import json
-import api.ollama_api as ollama_api
 import api.openai_api as openai_api
 
 

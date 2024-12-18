@@ -1,4 +1,5 @@
 QAnything-master
 __pycache__
-.idea
+../.idea
 venv
+*.yaml

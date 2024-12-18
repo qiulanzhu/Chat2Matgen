@@ -1,10 +1,8 @@
 import api.matgen_api as matgen_api
-import api.ollama_api as ollama_api
 import api.openai_api as openai_api
 import api.qanything_api as qanything_api
 import query_analyse
 from loguru import logger
-import json
 import sys
 from prompt import PROMPT_TEMPLATE
 
