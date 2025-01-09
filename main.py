@@ -27,6 +27,7 @@ def run(query):
             api_result += "</material_property>\n"
 
         key_information += api_result
+        key_information += "<docs>\n" + str(qanything_api.getRelationPaper(query)) + "</docs>\n"
     else:
         key_information += str(qanything_api.getRelationPaper(query))
 
