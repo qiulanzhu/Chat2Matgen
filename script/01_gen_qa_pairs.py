@@ -1,7 +1,7 @@
 import json
 import os
 from PyPDF2 import PdfReader
-from api.openai_api import llm_chat
+from api.qwen_api import llm_chat
 from tqdm import tqdm
 
 def read_pdf(file_path):
