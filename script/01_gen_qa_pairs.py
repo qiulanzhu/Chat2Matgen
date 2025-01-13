@@ -28,13 +28,13 @@ prompt_template_for_doc = """
 </THESIS>
 
 <INSTRUCTION>
-请根据上面的论文，提取论文的两个片段。
+请根据上面的论文，提取论文的3个片段。
  - 一个结论片段
  - 一个创新点片段
  - 每个片段大约200-500字符
  - 片段来自论文的某个连续部分，不要改写
 回答格式采用json格式：
-{"Q":["xxx", "xxx"]}
+{"Q":["xxx", "xxx", "xxx"]}
 </INSTRUCTION>
 
 注意：
@@ -62,7 +62,7 @@ prompt_template_for_question = """
 
 qa_pairs = []
 
-for filename in tqdm(os.listdir(data_dir)):
+for filename in tqdm(os.listdir(data_dir)[-3:]):
     if filename.endswith(".pdf"):
         file_path = os.path.join(data_dir, filename)
         
@@ -79,6 +79,6 @@ for filename in tqdm(os.listdir(data_dir)):
             qa_pairs.append({"Q": question, "A": doc})
 
 print(f"Total {len(qa_pairs)} question-answer pairs generated.")
-with open("qa_for_recall_rate.jsonl", "w") as f:
+with open("qa_for_recall_rate_add.jsonl", "w") as f:
     for qa_pair in qa_pairs:
         f.write(json.dumps(qa_pair) + "\n")
