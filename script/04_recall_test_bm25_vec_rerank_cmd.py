@@ -3,9 +3,6 @@ import sys
 import requests
 import json
 
-from arch.unitroot.critical_values.simulation.adf_z_critical_values_simulation_large_cluster import filename
-
-
 def send_request(question):
     url = 'http://127.0.0.1:8777/api/local_doc_qa/local_doc_chat'
     headers = {
