@@ -19,7 +19,7 @@ def run():
             docs = data['docs']
 
             scores = get_scores(answer, docs)
-            save_list.append({'question': question, 'answer': answer, 'docs': docs,'scores': scores})
+            save_list.append({'question': question, 'answer': answer, 'docs': docs,'scores': scores, 'docs_len': len(docs)})
 
     with open('recall_test_bm25_vec_rerank_scores.jsonl', 'w', encoding='utf-8') as f:
         for item in save_list:
