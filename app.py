@@ -2,6 +2,7 @@ from flask import Flask, Response, request, send_from_directory
 from flask_cors import CORS  # 引入 CORS
 import json
 from main import run
+from loguru import logger
 
 app = Flask(__name__, static_folder='public')
 
@@ -16,6 +17,7 @@ def home():
 @app.route('/get_answer', methods=['POST'])
 def get_answer():
     query = request.json.get('query', 'hi')
+    logger.info(f"query: {query}")
 
     def generate():
         for content_piece in run(query):
