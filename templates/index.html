@@ -229,7 +229,7 @@
                 const streamingMessageSpan = assistantMessageDiv.querySelector('span');
 
                 // Send request to backend
-                const response = await fetch('/get_answer', {
+                const response = await fetch('/chat2matgen/get_answer', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
