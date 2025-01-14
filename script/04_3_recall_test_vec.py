@@ -38,7 +38,7 @@ if __name__ == '__main__':
             qa_list.append((question, answer))
 
     bm25_vec_rerank_docs = []
-    for question, answer in qa_list[0:3]:
+    for question, answer in qa_list[0:200]:
         doc_list, filename_list = send_request(question)
         bm25_vec_rerank_docs.append({"Q": question, "A": answer, "docs": doc_list})
 
