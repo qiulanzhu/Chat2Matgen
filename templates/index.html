@@ -229,7 +229,7 @@
                 const streamingMessageSpan = assistantMessageDiv.querySelector('span');
 
                 // Send request to backend
-                const response = await fetch('http://127.0.0.1:8200/get_answer', {
+                const response = await fetch('/get_answer', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
