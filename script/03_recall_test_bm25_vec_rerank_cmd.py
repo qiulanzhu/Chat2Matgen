@@ -10,7 +10,7 @@ def send_request(question):
     }
     data = {
         "user_id": "zzp",
-        "kb_ids": ["KBa3ed65890df842fcb8e2f9f9392f3ac7"],
+        "kb_ids": ["KBa8c345ae1e9a4a7dad96a159f2ebf4d9"],
         "history": [],
         "question": question,
         "rerank": True,
