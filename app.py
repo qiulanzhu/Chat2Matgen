@@ -29,4 +29,4 @@ def get_answer():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=8200)
+    app.run(debug=False, host='0.0.0.0', port=8200)
