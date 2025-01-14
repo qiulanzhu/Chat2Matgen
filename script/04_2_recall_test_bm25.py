@@ -2,6 +2,7 @@ import sys
 
 import requests
 import json
+from tqdm import tqdm
 
 def send_request(question):
     url = 'http://127.0.0.1:8777/api/local_doc_qa/local_doc_chat'
@@ -38,7 +39,7 @@ if __name__ == '__main__':
             qa_list.append((question, answer))
 
     bm25_vec_rerank_docs = []
-    for question, answer in qa_list[0:200]:
+    for question, answer in tqdm(qa_list[0:200]):
         doc_list, filename_list = send_request(question)
         bm25_vec_rerank_docs.append({"Q": question, "A": answer, "docs": doc_list})
 
