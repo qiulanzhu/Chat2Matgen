@@ -10,7 +10,7 @@ def send_request(question):
     }
     data = {
         "user_id": "zzp",
-        "kb_ids": ["KBf42f9bab99fa4ebd93a59be1e42f1969"],
+        "kb_ids": ["KBa3ed65890df842fcb8e2f9f9392f3ac7"],
         "history": [],
         "question": question,
         "rerank": True,
@@ -37,5 +37,6 @@ if __name__ == '__main__':
     question = sys.argv[1]
     doc_list, filename_list = send_request(question)
     print(f"问题: {question}")
+    print(f"内容：{doc_list}")
     print(f"文档: {filename_list}")
     print("=" * 50)

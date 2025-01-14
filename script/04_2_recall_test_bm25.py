@@ -1,3 +1,5 @@
+import sys
+
 import requests
 import json
 
@@ -8,7 +10,7 @@ def send_request(question):
     }
     data = {
         "user_id": "zzp",
-        "kb_ids": ["KBf42f9bab99fa4ebd93a59be1e42f1969"],
+        "kb_ids": ["KBa3ed65890df842fcb8e2f9f9392f3ac7"],
         "history": [],
         "question": question,
         "rerank": True,
@@ -17,11 +19,12 @@ def send_request(question):
         response = requests.post(url=url, headers=headers, json=data, timeout=60)
         res = response.json()
         doc_list = []
+        filename_list = []
         for doc in res['source_documents']:
-            content = doc['content']
-            doc_list.append(content)
+            doc_list.append(doc['content'])
+            filename_list.append(doc['file_name'])
 
-        return doc_list
+        return doc_list, filename_list
     except Exception as e:
         print(f"请求发送失败: {e}")
 
@@ -34,9 +37,11 @@ if __name__ == '__main__':
             answer = data['A']
             qa_list.append((question, answer))
 
+    bm25_vec_rerank_docs = []
     for question, answer in qa_list[0:3]:
-        docs = send_request(question)
-        print(f"问题: {question}")
-        print(f"答案: {answer}")
-        print(f"文档: {docs}")
-        print("="*50)
+        doc_list, filename_list = send_request(question)
+        bm25_vec_rerank_docs.append({"Q": question, "A": answer, "docs": doc_list})
+
+    with open('recall_test_bm25.jsonl', 'w', encoding='utf-8') as f:
+        for doc in bm25_vec_rerank_docs:
+            f.write(json.dumps(doc, ensure_ascii=False) + '\n')
