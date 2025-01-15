@@ -18,7 +18,7 @@ def run():
             answer = data['A']
             docs = data['docs']
 
-            scores = get_scores(answer, docs)
+            scores = get_scores(answer, docs).tolist()
             save_list.append({'question': question, 'answer': answer, 'docs': docs,'scores': scores, 'docs_len': len(docs)})
 
     with open('recall_test_bm25_vec_rerank_scores.jsonl', 'w', encoding='utf-8') as f:
@@ -38,7 +38,7 @@ def run_example():
     print(scores)
 
 if __name__ == '__main__':
-    run_example()
+    run()
 
 
 

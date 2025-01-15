@@ -1,7 +1,7 @@
 import json
 import os
 from PyPDF2 import PdfReader
-from api.qwen_api import llm_chat
+from api.openai_api import llm_chat
 from tqdm import tqdm
 
 def read_pdf(file_path):
@@ -28,13 +28,13 @@ prompt_template_for_doc = """
 </THESIS>
 
 <INSTRUCTION>
-请根据上面的论文，提取论文的3个片段。
- - 一个结论片段
+请根据上面的论文，提取论文的2个片段。
+ - 一个实验分析片段
  - 一个创新点片段
  - 每个片段大约200-500字符
  - 片段来自论文的某个连续部分，不要改写
 回答格式采用json格式：
-{"Q":["xxx", "xxx", "xxx"]}
+{"Q":["xxx", "xxx"]}
 </INSTRUCTION>
 
 注意：
@@ -48,9 +48,10 @@ prompt_template_for_question = """
 
 <INSTRUCTION>
 请根据上面的论文片段，写1个问题。
+ - 问题的一部分和论文片段的一部分完成相同。
  - 问题是针对该论文片段进行提问。
  - 问题简单直接，不涉及复杂的推理。
- - 问题要放到一个问题库中，对多篇论文进行提问，所有不要出现in the paper这样的提问方式。
+ - 问题要放到一个问题库中，对多篇论文进行提问，所有不要出现in the text这样的提问方式。
  - 论文片段要能够很明显地回答这个问题，让小学生看了论文片段也能回答这个问题。
 回答格式采用json格式：
 {"Q":"xxx"}
@@ -62,12 +63,12 @@ prompt_template_for_question = """
 
 qa_pairs = []
 
-for filename in tqdm(os.listdir(data_dir)[-3:]):
+for filename in tqdm(os.listdir(data_dir)[0:200]):
     if filename.endswith(".pdf"):
         file_path = os.path.join(data_dir, filename)
         
         content = read_pdf(file_path)
-        prompt = prompt_template_for_doc.replace("[thesis]", content)
+        prompt = prompt_template_for_doc.replace("[thesis]", content[0:60000])
         docs_str = llm_chat(prompt)
         json_docs = json.loads(docs_str)
         docs = json_docs["Q"]
