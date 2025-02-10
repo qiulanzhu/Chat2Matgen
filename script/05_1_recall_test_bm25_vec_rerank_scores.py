@@ -1,7 +1,7 @@
 import json
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
-model = SentenceTransformer(r'E:\Desktop\CaiTing\hf-models\all-MiniLM-L6-v2', device='cpu')
+model = SentenceTransformer('/mnt/samba/hf_models/all-MiniLM-L6-v2', device='cuda:1')
 
 
 def get_scores(answer, docs):

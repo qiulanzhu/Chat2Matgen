@@ -1,10 +1,10 @@
 import openai
 import os
 
-openai.api_key = os.environ['DEEPSEEK_API_KEY']
-openai.base_url = "https://api.deepseek.com"
+openai.api_key = "sk-wpxmcurxrehxghluhgrvsebfqmgizoguobvejimfeucegyno"
+openai.base_url = "https://api.siliconflow.cn/v1"
 
-def llm_chat(prompt, model="deepseek-chat", json_format=True):
+def llm_chat(prompt, model="deepseek-ai/DeepSeek-V3", json_format=True):
     if json_format:
         response_format = {
             'type': 'json_object'
@@ -34,7 +34,7 @@ def llm_chat(prompt, model="deepseek-chat", json_format=True):
     print(f'model:{model}')
     return ret
 
-def llm_chat_stream(prompt='hi', model="deepseek-chat"):
+def llm_chat_stream(prompt='hi', model="deepseek-ai/DeepSeek-V3"):
     response = openai.chat.completions.create(
         model=model,
         messages=[
@@ -56,5 +56,5 @@ def llm_chat_stream(prompt='hi', model="deepseek-chat"):
             yield content_piece
 
 if __name__ == '__main__':
-    for content_piece in  llm_chat_stream("随机生成3句金句", model="deepseek-chat"):
+    for content_piece in  llm_chat_stream("随机生成3句金句", model="deepseek-ai/DeepSeek-V3"):
         print(content_piece, end='', flush=True)
