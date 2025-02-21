@@ -105,8 +105,8 @@ def main():
     setup_logging()
 
     # 设置输入和输出目录
-    input_dir = "/mnt/samba/tools/documents"  # 这里替换为你的PDF文件目录
-    output_dir = "/mnt/samba/tools/documents_txt"  # 输出TXT文件的目录
+    input_dir = "/mnt/samba/Chat2Matgen/script/data"  # 这里替换为你的PDF文件目录
+    output_dir = "/mnt/samba/Chat2Matgen/script/txt"  # 输出TXT文件的目录
 
     # 使用12个工作进程（保留4个核心给系统）
     num_workers = 12
