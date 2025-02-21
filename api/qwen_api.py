@@ -2,7 +2,7 @@ import os
 from openai import OpenAI
 
 client = OpenAI(
-    api_key=os.environ['QWEN_API_KEY'],
+    api_key="sk-00de12cbb9c24bc1ab178092c0116d50",
     base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
 )
 
