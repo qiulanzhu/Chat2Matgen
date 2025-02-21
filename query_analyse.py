@@ -3,7 +3,7 @@ from loguru import logger
 import json
 import api.openai_api as openai_api
 import api.qwen_api as qwen_api
-
+import traceback
 
 def extract_mat_id(query):
     mat_id_list = []
@@ -86,6 +86,7 @@ def extract_element(query):
         return data['is_professional_question'], data['question_classify'], elements_list, formula_list, space_group_list
     except Exception as e:
         logger.error(e)
+        traceback.print_exc()
         return None, None, None, None, None
 
 if __name__ == "__main__":
