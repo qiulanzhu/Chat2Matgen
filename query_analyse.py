@@ -59,7 +59,7 @@ def extract_element(query):
       "space_group": ["P6/mmm"],
       "confidence_score": 0.95
     }
-    其中：elements、stoichiometry、space_group均为数组类型，formula为字典类型。
+    注意，由于存在多个化学表达的情况，因此formula的elements和stoichiometry为数组类型。
     请根据上述规则,准确、详细地提取材料科学信息。
     """
     prompt = prompt.replace('{query}', query)
