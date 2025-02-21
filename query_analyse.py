@@ -65,7 +65,7 @@ def extract_element(query):
     prompt = prompt.replace('{query}', query)
     logger.info(prompt)
     try:
-        data = json.loads(qwen_api.llm_chat(prompt))
+        data = json.loads(openai_api.llm_chat(prompt))
         logger.info(data)
 
         formula_list = []
