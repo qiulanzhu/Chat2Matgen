@@ -3,6 +3,7 @@ import openai
 import os
 
 DEEPSEEK_API_KEY = os.getenv("QY_DEEPSEEK_API_KEY")
+print(DEEPSEEK_API_KEY)
 client = OpenAI(api_key=DEEPSEEK_API_KEY, base_url="https://api.siliconflow.cn/v1")
 
 def llm_chat(prompt, model="deepseek-ai/DeepSeek-V3", json_format=False):

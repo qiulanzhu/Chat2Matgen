@@ -10,6 +10,8 @@
       "max_memory_restart": "500M",
       "log_date_format": "YYYY-MM-DD HH:mm:ss",
       "env": {
+        "QY_DEEPSEEK_API_KEY": "sk-vyuctmjebscfwkgtmrwcujddfcvolfbhwofydsrnnmoxaszh",
+        "QY_QWEN_API_KEY": "sk-00de12cbb9c24bc1ab178092c0116d50"
       }
     }
   ]
