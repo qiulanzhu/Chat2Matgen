@@ -32,6 +32,8 @@ def llm_chat(prompt, model="deepseek-ai/DeepSeek-V3", json_format=False):
     ret = response.choices[0].message.content
     print(ret)
     print(f'model:{model}')
+    ret = ret.replace("""```json""", "")
+    ret = ret.replace("""```""", "")
     return ret
 
 def llm_chat_stream(prompt='hi', model="deepseek-ai/DeepSeek-V3"):

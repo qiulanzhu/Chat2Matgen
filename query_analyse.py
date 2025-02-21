@@ -2,6 +2,7 @@ import re
 from loguru import logger
 import json
 import api.openai_api as openai_api
+import api.qwen_api as qwen_api
 
 
 def extract_mat_id(query):
@@ -63,7 +64,7 @@ def extract_element(query):
     prompt = prompt.replace('{query}', query)
     logger.info(prompt)
     try:
-        data = json.loads(openai_api.llm_chat(prompt))
+        data = json.loads(qwen_api.llm_chat(prompt))
         logger.info(data)
 
         formula_list = []
