@@ -10,7 +10,7 @@ def getRelationPaper(query):
     }
     data = {
         "user_id": "zzp",
-        "kb_ids": ["KBa8c345ae1e9a4a7dad96a159f2ebf4d9"],
+        "kb_ids": ["KB22fcb8bff6ae4c3cb851731b16c88249"],
         "question": f"{query}",
     }
     try:
