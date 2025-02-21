@@ -1,5 +1,6 @@
 import api.matgen_api as matgen_api
 import api.openai_api as openai_api
+import api.qwen_api as qwen_api
 import api.qanything_api as qanything_api
 import query_analyse
 from loguru import logger
@@ -36,7 +37,7 @@ def run(query):
     prompt = prompt.replace('{key_information}', key_information)
     logger.info(f"prompt:{prompt}")
 
-    return openai_api.llm_chat_stream(prompt)
+    return qwen_api.llm_chat_stream(prompt)
 
 if __name__ == '__main__':
     input_query = "Can you tell me the crystal system of the crystal material with formula 'Si1 Os1' and space group 'Pm-3m'?"
